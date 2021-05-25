@@ -1,13 +1,15 @@
-export const delayMillis = (delayMs: number): Promise<void> => {
-  return new Promise((resolve) => setTimeout(resolve, delayMs));
-};
+import http from 'http';
 
-export const greet = (name: string): string => `Hello ${name}`;
+const port = process.env.PORT || 3000;
 
-export const foo = async (): Promise<boolean> => {
-  console.log(greet('World'));
-  console.log('ddd ');
-  await delayMillis(1000);
-  console.log('done');
-  return true;
-};
+const server = http.createServer((req, res) => {
+  const headers = req.headers;
+  console.log(headers);
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/html');
+  res.end('<h1>Hello, World!</h1>');
+});
+
+server.listen(port, () => {
+  console.log(`Server running at port ${port}`);
+});
